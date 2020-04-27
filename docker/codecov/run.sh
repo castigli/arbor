@@ -7,4 +7,4 @@ name=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
 $1
 
 # Create the report
-lcov --no-external --capture --base-directory /arbor-git --directory /arbor-build --output-file /arbor-git/${name}.info &> /dev/null
+lcov --no-external --capture --base-directory /arbor-git --directory /arbor-build --output-file /shared/${name}.info &> /dev/null

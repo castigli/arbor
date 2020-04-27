@@ -39,7 +39,7 @@ RUN mkdir /arbor-build && cd /arbor-build && \
     mkdir /arbor-build && \
     cd /arbor-build-tmp && \
     find -iname "*.gcno" -exec cp --parent \{\} /arbor-build \; && \
-    rm -rf /arbor-build-tmp /arbor-git
+    rm -rf /arbor-build-tmp
 
 FROM ubuntu:18.04
 
@@ -63,6 +63,14 @@ ENV NVIDIA_REQUIRE_CUDA "cuda>=10.1 brand=tesla,driver>=384,driver<385 brand=tes
 # Copy the executables and the codecov gcno files
 COPY --from=builder /root/arbor.bundle /root/arbor.bundle
 COPY --from=builder /arbor-build /arbor-build
+
+# Copy the source files into the image as well.
+# This is necessary for code coverage of MPI tests: gcov has to have write temporary
+# data into the source folder. In distributed applications we can therefore not mount
+# the git repo folder at runtime in the container, because it is shared and would
+# cause race conditions in gcov. When PR #291 or #265 (see above) is merged
+# we can at the very least remove all remnants of git, in particular the `.git` folder...
+COPY --from=builder /arbor-git /arbor-git
 
 # Make it easy to call our binaries.
 ENV PATH="/root/arbor.bundle/usr/bin:$PATH"
