@@ -52,7 +52,8 @@ RUN apt-get update && \
       perl \
       curl \
       ca-certificates \
-      git
+      git && \
+    rm -rf /var/lib/apt/lists/*
 
 # This is the only thing necessary really from nvidia/cuda's ubuntu18.04 runtime image
 ENV NVIDIA_VISIBLE_DEVICES all
