@@ -13,4 +13,6 @@ lcov --remove /arbor/combined.info "/arbor/CMakeCXXCompilerId.cpp" --output-file
 lcov --remove /arbor/combined.info "/arbor/ext/*" --output-file /arbor/combined.info
 
 # Upload to codecov.io
+pushd /arbor
 bash <(curl -s https://codecov.io/bash) -f /arbor/combined.info
+popd
