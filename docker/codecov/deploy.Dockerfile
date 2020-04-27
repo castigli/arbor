@@ -8,11 +8,11 @@ ARG BUILD_ENV
 FROM $BUILD_ENV as builder
 
 # Build arbor
-COPY . /arbor
+COPY . /arbor-git
 
 # Build and bundle binaries
 RUN mkdir /arbor-build && cd /arbor-build && \
-    CC=mpicc CXX=mpicxx cmake /arbor \
+    CC=mpicc CXX=mpicxx cmake /arbor-git \
       -DARB_VECTORIZE=ON \
       -DARB_ARCH=broadwell \
       -DARB_WITH_PYTHON=OFF \
@@ -39,7 +39,7 @@ RUN mkdir /arbor-build && cd /arbor-build && \
     mkdir /arbor-build && \
     cd /arbor-build-tmp && \
     find -iname "*.gcno" -exec cp --parent \{\} /arbor-build \; && \
-    rm -rf /arbor-build-tmp /arbor
+    rm -rf /arbor-build-tmp /arbor-git
 
 FROM ubuntu:18.04
 
