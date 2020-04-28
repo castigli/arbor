@@ -12,7 +12,8 @@ lcov --extract /shared/combined.info "/arbor-git/*" --output-file /shared/combin
 lcov --remove /shared/combined.info "/arbor-git/CMakeCXXCompilerId.cpp" --output-file /shared/combined.info
 lcov --remove /shared/combined.info "/arbor-git/ext/*" --output-file /shared/combined.info
 
-# Upload to codecov.io
+# Upload to codecov.io: once for github, once for the gitlab mirror
 pushd /arbor-git
-bash <(curl -s https://codecov.io/bash) -f /shared/combined.info
+bash <(curl -s https://codecov.io/bash) -f /shared/combined.info -t $CODECOV_TOKEN_GITHUB
+bash <(curl -s https://codecov.io/bash) -f /shared/combined.info -t $CODECOV_TOKEN_GITLAB
 popd
