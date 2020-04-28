@@ -3,7 +3,7 @@
 # Post processing: combine all *.info reports into a single one
 # and prune code cov from external or generated files
 
-TRACE_FILES_ARGS=`find /shared -type f -iname '*.info' -exec sh -c "echo -add-tracefile {}" \;`
+TRACE_FILES_ARGS=`find /shared -type f -iname '*.info' -exec sh -c "echo --add-tracefile {}" \;`
 
 lcov ${TRACE_FILES_ARGS} --output-file /shared/combined.info
 
